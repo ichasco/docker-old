@@ -7,7 +7,7 @@ services:
        - db_data:/var/lib/mysql
      restart: always
      networks:
-       - wp1_back
+       - wp_back
      environment:
        MYSQL_ROOT_PASSWORD: wordpress
        MYSQL_DATABASE: wordpress
@@ -20,7 +20,9 @@ services:
      image: wordpress:latest
      restart: always
      networks:
-      - wp1_back
+      - wp_back
+     ports:
+       80:80
      environment:
        WORDPRESS_DB_HOST: db:3306
        WORDPRESS_DB_USER: wordpress
@@ -33,5 +35,5 @@ volumes:
     wp_data:
 
 networks:
-  wp1_back:
+  wp_back:
     driver: bridge
