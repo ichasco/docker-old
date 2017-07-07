@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  apt-cache-ng:
+    image: sameersbn/apt-cacher-ng
+    restart: always
+    volumes:
+      - apt-cache:/var/cache/apt-cacher-ng
+    ports:
+      - "3142:3142"
+    container_name: apt-cacher-ng
+
+volumes:
+  apt-cache
