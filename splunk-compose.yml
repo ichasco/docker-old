@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+
+  web:
+    image: splunk/splunk
+    ports:
+      - "8000:8000"
+      - "9997:9997"
+      - "8088:8088"
+      - "1514:1514"
+    environment:
+      SPLUNK_START_ARGS: --accept-license --answer-yes
+      SPLUNK_ENABLE_LISTEN: 9997
+      SPLUNK_ADD: tcp 1514
+      SPLUNK_USER: root
+    volumes:
+      - $PWD/data/splunk_etc:/opt/splunk/etc
+      - $PWD/data/splunk_var:/opt/splunk/var
