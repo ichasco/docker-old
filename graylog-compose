@@ -1,0 +1,50 @@
+version: '2'
+services:
+  mongodb:
+    image: mongo:3
+    volumes:
+      - mongo_data:/data/db
+  elasticsearch:
+    image: elasticsearch:5
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+    environment:
+      - http.host=0.0.0.0
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - cluster.name=graylog
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      mem_limit: 1g
+  graylog:
+    image: graylog2/server
+    volumes:
+      - graylog_data:/usr/share/graylog/data
+    environment:
+      GRAYLOG_PASSWORD_SECRET: pc5segCzHPNlVn5eTIU0mrQtSiueSQTXIq0XOe0ZSarEqJ3yw6VY58INFNrATDnaUzVdquh6ugY0HHHHCqstARbr8gV3zyrI
+      #password: admin
+      GRAYLOG_ROOT_PASSWORD_SHA2: 8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918
+      GRAYLOG_REST_LISTEN_URI: http://0.0.0.0:9000/api/
+      GRAYLOG_REST_TRANSPORT_URI: http://graylog:9000/api/
+      GRAYLOG_WEB_LISTEN_URI: http://0.0.0.0:9000/
+      GRAYLOG_ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+    depends_on:
+      - mongodb
+      - elasticsearch
+    links:
+      - mongodb:mongo
+    ports:
+      - 9000:9000
+      - 514:514
+      - 514:514/udp
+      - 12201:12201
+      - 12201:12201/udp
+volumes:
+  mongo_data:
+    driver: local
+  es_data:
+    driver: local
+  graylog_data:
+    driver: local
