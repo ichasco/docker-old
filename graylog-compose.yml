@@ -27,6 +27,7 @@ services:
       #password: admin
       GRAYLOG_ROOT_PASSWORD_SHA2: 8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918
       GRAYLOG_REST_LISTEN_URI: http://0.0.0.0:9000/api/
+      # IP o DNS del host de graylog
       GRAYLOG_REST_TRANSPORT_URI: http://graylog:9000/api/
       GRAYLOG_WEB_LISTEN_URI: http://0.0.0.0:9000/
       GRAYLOG_ELASTICSEARCH_HOSTS: http://elasticsearch:9200
